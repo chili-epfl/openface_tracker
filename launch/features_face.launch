@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="pathOpenFace" default="/home/asselbor/catkin_ws/src/features_face/OpenFace" /> 
+  <arg name="pathOpenFace" value="/home/asselbor/catkin_ws/src/features_face/OpenFace" /> 
 
 
   <node pkg="features_face" type="executable_launcher.py" name="executable_launcher">
