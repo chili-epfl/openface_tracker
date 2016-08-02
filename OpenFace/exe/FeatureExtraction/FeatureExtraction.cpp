@@ -24,6 +24,7 @@
 
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "std_msgs/Float32MultiArray.h"
 
 
 // topic in global variable
@@ -181,7 +182,7 @@ int main (int argc, char **argv)
 	// create ros node + topic
 	ros::init(argc, argv, "features_extractor");
 	ros::NodeHandle n;
-	pub_feature = n.advertise<std_msgs::String>("topic_features", 5000);
+	pub_feature = n.advertise<std_msgs::Float32MultiArray>("topic_features", 5000);
 	ros::Rate loop_rate(0.1);
 
 
@@ -613,8 +614,12 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 	const FaceAnalysis::FaceAnalyser& face_analyser)
 {
 	// prepare message to send in topic
-	std_msgs::String features;
+	std_msgs::Float32MultiArray array;
+	//clear array
+	array.data.clear();
+
 	std::stringstream ss;
+	float a[3];
 
 
 	double confidence = 0.5 * (1 - face_model.detection_certainty);
@@ -624,8 +629,12 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 	// Output the estimated gaze
 	if (output_gaze)
 	{
-		ss<< "|" << gazeDirection0.x << "|" << gazeDirection0.y << "|" << gazeDirection0.z
-			<< "|" << gazeDirection1.x << "|" << gazeDirection1.y << "|" << gazeDirection1.z;
+		array.data.push_back(gazeDirection0.x);
+		array.data.push_back(gazeDirection0.y);
+		array.data.push_back(gazeDirection0.z);
+		array.data.push_back(gazeDirection1.x);
+		array.data.push_back(gazeDirection1.y);
+		array.data.push_back(gazeDirection1.z);
 
 		*output_file << ", " << gazeDirection0.x << ", " << gazeDirection0.y << ", " << gazeDirection0.z
 			<< ", " << gazeDirection1.x << ", " << gazeDirection1.y << ", " << gazeDirection1.z;
@@ -634,8 +643,12 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 	// Output the estimated head pose
 	if (output_pose)
 	{
-		ss << "|" << pose_estimate[0] << "|" << pose_estimate[1] << "|" << pose_estimate[2]
-			<< "|" << pose_estimate[3] << "|" << pose_estimate[4] << "|" << pose_estimate[5];
+		array.data.push_back(pose_estimate[0]);
+		array.data.push_back(pose_estimate[1]);
+		array.data.push_back(pose_estimate[2]);
+		array.data.push_back(pose_estimate[3]);
+		array.data.push_back(pose_estimate[4]);
+		array.data.push_back(pose_estimate[5]);
 
 		*output_file << ", " << pose_estimate[0] << ", " << pose_estimate[1] << ", " << pose_estimate[2]
 			<< ", " << pose_estimate[3] << ", " << pose_estimate[4] << ", " << pose_estimate[5];
@@ -679,10 +692,6 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 
 		// ROS
 		// create message for the topic
-
-		//end ros
-
-
 		auto aus_reg = face_analyser.GetCurrentAUsReg();
 
 		vector<string> au_reg_names = face_analyser.GetAURegNames();
@@ -697,9 +706,7 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 			{
 				if (au_name.compare(au_reg.first) == 0)
 				{
-					ss << au_reg.second << "|";
-
-					//cout << au_reg.second << " |";
+					array.data.push_back(au_reg.second);
 					*output_file << ", " << au_reg.second;
 					break;
 				}
@@ -741,8 +748,7 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 		}
 	}
 
-	features.data = ss.str();
-	pub_feature.publish(features);
+	pub_feature.publish(array);
 
 	*output_file << endl;
 }

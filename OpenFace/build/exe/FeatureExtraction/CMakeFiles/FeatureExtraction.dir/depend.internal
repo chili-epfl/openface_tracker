@@ -691,6 +691,9 @@ exe/FeatureExtraction/CMakeFiles/FeatureExtraction.dir/FeatureExtraction.cpp.o
  /opt/ros/kinetic/include/ros/wall_timer.h
  /opt/ros/kinetic/include/ros/wall_timer_options.h
  /opt/ros/kinetic/include/rosconsole/macros_generated.h
+ /opt/ros/kinetic/include/std_msgs/Float32MultiArray.h
+ /opt/ros/kinetic/include/std_msgs/MultiArrayDimension.h
+ /opt/ros/kinetic/include/std_msgs/MultiArrayLayout.h
  /opt/ros/kinetic/include/std_msgs/String.h
  /usr/include/boost/filesystem.hpp
  /usr/include/boost/filesystem/fstream.hpp
