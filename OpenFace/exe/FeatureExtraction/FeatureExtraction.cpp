@@ -618,9 +618,6 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 	//clear array
 	array.data.clear();
 
-	std::stringstream ss;
-	float a[3];
-
 
 	double confidence = 0.5 * (1 - face_model.detection_certainty);
 
