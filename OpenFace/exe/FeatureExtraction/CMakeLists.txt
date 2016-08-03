@@ -2,14 +2,17 @@
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  tf
+  visualization_msgs
+  sensor_msgs
+  cv_bridge
+  image_transport
+  image_geometry
 )
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
-
-
-
 
 ### TBB library
 include_directories(${TBB_ROOT_DIR}/include)
@@ -20,7 +23,7 @@ add_executable(FeatureExtraction FeatureExtraction.cpp)
 include_directories(${LandmarkDetector_SOURCE_DIR}/include)
 
 include_directories(../../lib/local/LandmarkDetector/include)
-include_directories(../../lib/local/FaceAnalyser/include)		
+include_directories(../../lib/local/FaceAnalyser/include)
 
 target_link_libraries(FeatureExtraction LandmarkDetector)
 target_link_libraries(FeatureExtraction FaceAnalyser)

@@ -25,6 +25,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "std_msgs/Float32MultiArray.h"
+#include "tf/transform_broadcaster.h"
 
 
 // topic in global variable
@@ -70,11 +71,11 @@ void create_directory_from_file(string output_path)
 {
 
 	// Creating the right directory structure
-	
+
 	// First get rid of the file
 	auto p = path(path(output_path).parent_path());
 
-	if(!p.empty() && !boost::filesystem::exists(p))		
+	if(!p.empty() && !boost::filesystem::exists(p))
 	{
 		bool success = boost::filesystem::create_directories(p);
 		if(!success)
@@ -90,10 +91,10 @@ void create_directory(string output_path)
 	// Creating the right directory structure
 	auto p = path(output_path);
 
-	if(!boost::filesystem::exists(p))		
+	if(!boost::filesystem::exists(p))
 	{
 		bool success = boost::filesystem::create_directories(p);
-		
+
 		if(!success)
 		{
 			cout << "Failed to create a directory..." << p.string() << endl;
@@ -174,7 +175,7 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 	bool output_model_params, bool output_pose, bool output_AUs, bool output_gaze,
 	const LandmarkDetector::CLNF& face_model, int frame_count, double time_stamp, bool detection_success,
 	cv::Point3f gazeDirection0, cv::Point3f gazeDirection1, const cv::Vec6d& pose_estimate, double fx, double fy, double cx, double cy,
-	const FaceAnalysis::FaceAnalyser& face_analyser);
+	const FaceAnalysis::FaceAnalyser& face_analyser, tf::Transform tr, tf::TransformBroadcaster br);
 
 
 int main (int argc, char **argv)
@@ -185,12 +186,14 @@ int main (int argc, char **argv)
 	pub_feature = n.advertise<std_msgs::Float32MultiArray>("topic_features", 5000);
 	ros::Rate loop_rate(0.1);
 
+    tf::TransformBroadcaster br;
+    tf::Transform tr;
 
 	vector<string> arguments = get_arguments(argc, argv);
 
-	// Some initial parameters that can be overriden from command line	
+	// Some initial parameters that can be overriden from command line
 	vector<string> input_files, depth_directories, output_files, tracked_videos_output;
-	
+
 
 	LandmarkDetector::FaceModelParameters det_parameters(arguments);
 	// Always track gaze in feature extraction
@@ -200,7 +203,7 @@ int main (int argc, char **argv)
 
 
 	// Get the input output file parameters
-	
+
 	// Indicates that rotation should be with respect to camera or world coordinates
 	bool use_world_coordinates;
 	LandmarkDetector::get_video_input_output_params(input_files, depth_directories, output_files, tracked_videos_output, use_world_coordinates, arguments);
@@ -218,8 +221,8 @@ int main (int argc, char **argv)
 	// By default try webcam 0
 	int device = 0;
 	// Get camera parameters
-	LandmarkDetector::get_camera_params(device, fx, fy, cx, cy, arguments);    
-	
+	LandmarkDetector::get_camera_params(device, fx, fy, cx, cy, arguments);
+
 	// If cx (optical axis centre) is undefined will use the image size/2 as an estimate
 	bool cx_undefined = false;
 	bool fx_undefined = false;
@@ -233,16 +236,16 @@ int main (int argc, char **argv)
 	}
 
 	// The modules that are being used for tracking
-	LandmarkDetector::CLNF face_model(det_parameters.model_location);	
+	LandmarkDetector::CLNF face_model(det_parameters.model_location);
 
 	vector<string> output_similarity_align;
 	vector<string> output_hog_align_files;
 
 	double sim_scale = 0.7;
 	int sim_size = 112;
-	bool grayscale = false;	
+	bool grayscale = false;
 	bool video_output = false;
-	bool rigid = false;	
+	bool rigid = false;
 	bool dynamic = true; // Indicates if a dynamic AU model should be used (dynamic is useful if the video is long enough to include neutral expressions)
 	int num_hog_rows;
 	int num_hog_cols;
@@ -252,13 +255,13 @@ int main (int argc, char **argv)
 	bool output_2D_landmarks = true;
 	bool output_3D_landmarks = true;
 	bool output_model_params = true;
-	bool output_pose = true; 
+	bool output_pose = true;
 	bool output_AUs = true;
 	bool output_gaze = true;
 
 	get_output_feature_params(output_similarity_align, output_hog_align_files, sim_scale, sim_size, grayscale, rigid, verbose, dynamic,
 		output_2D_landmarks, output_3D_landmarks, output_model_params, output_pose, output_AUs, output_gaze, arguments);
-	
+
 	// Used for image masking
 
 	string tri_loc;
@@ -276,7 +279,7 @@ int main (int argc, char **argv)
 			cout << "Can't find triangulation files, exiting" << endl;
 			return 0;
 		}
-	}	
+	}
 
 	// Will warp to scaled mean shape
 	cv::Mat_<double> similarity_normalised_shape = face_model.pdm.mean_shape * sim_scale;
@@ -284,7 +287,7 @@ int main (int argc, char **argv)
 	similarity_normalised_shape = similarity_normalised_shape(cv::Rect(0, 0, 1, 2*similarity_normalised_shape.rows/3)).clone();
 
 	// If multiple video files are tracked, use this to indicate if we are done
-	bool done = false;	
+	bool done = false;
 	int f_n = -1;
 	int curr_img = -1;
 
@@ -317,18 +320,18 @@ int main (int argc, char **argv)
 			cout << "Can't find AU prediction files, exiting" << endl;
 			return 0;
 		}
-	}	
+	}
 
 	// Creating a  face analyser that will be used for AU extraction
 	FaceAnalysis::FaceAnalyser face_analyser(vector<cv::Vec3d>(), 0.7, 112, 112, au_loc, tri_loc);
-		
+
 	while(ros::ok()) // this is not a for loop as we might also be reading from a webcam
 	{
-		
+
 		string current_file;
-		
+
 		cv::VideoCapture video_capture;
-		
+
 		cv::Mat captured_image;
 		int total_frames = -1;
 		int reported_completion = 0;
@@ -340,7 +343,7 @@ int main (int argc, char **argv)
 			// We might specify multiple video files as arguments
 			if(input_files.size() > 0)
 			{
-				f_n++;			
+				f_n++;
 				current_file = input_files[f_n];
 			}
 			else
@@ -383,10 +386,10 @@ int main (int argc, char **argv)
 				INFO_STREAM("Device or file opened");
 			}
 
-			video_capture >> captured_image;	
+			video_capture >> captured_image;
 		}
-		
-		
+
+
 		// If optical centers are not defined just use center of image
 		if(cx_undefined)
 		{
@@ -402,7 +405,7 @@ int main (int argc, char **argv)
 			fx = (fx + fy) / 2.0;
 			fy = fx;
 		}
-	
+
 		// Creating output files
 		std::ofstream output_file;
 
@@ -423,13 +426,13 @@ int main (int argc, char **argv)
 		}
 
 		int frame_count = 0;
-		
+
 		// This is useful for a second pass run (if want AU predictions)
 		vector<cv::Vec6d> params_global_video;
 		vector<bool> successes_video;
 		vector<cv::Mat_<double>> params_local_video;
 		vector<cv::Mat_<double>> detected_landmarks_video;
-				
+
 		// Use for timestamping if using a webcam
 		int64 t_initial = cv::getTickCount();
 
@@ -440,29 +443,29 @@ int main (int argc, char **argv)
 
 		INFO_STREAM( "Starting tracking");
 		while(!captured_image.empty())
-		{		
+		{
 
 			// Grab the timestamp first
-			time_stamp = (double)frame_count * (1.0 / fps_vid_in);				
-			
+			time_stamp = (double)frame_count * (1.0 / fps_vid_in);
+
 
 			// Reading the images
 			cv::Mat_<uchar> grayscale_image;
 
 			if(captured_image.channels() == 3)
 			{
-				cvtColor(captured_image, grayscale_image, CV_BGR2GRAY);				
+				cvtColor(captured_image, grayscale_image, CV_BGR2GRAY);
 			}
 			else
 			{
-				grayscale_image = captured_image.clone();				
+				grayscale_image = captured_image.clone();
 			}
-		
+
 			// The actual facial landmark detection / tracking
 			bool detection_success;
 			detection_success = LandmarkDetector::DetectLandmarksInVideo(grayscale_image, face_model, det_parameters);
 
-			
+
 			// Gaze tracking, absolute gaze direction
 			cv::Point3f gazeDirection0(0, 0, -1);
 			cv::Point3f gazeDirection1(0, 0, -1);
@@ -485,17 +488,17 @@ int main (int argc, char **argv)
 
 				if(!det_parameters.quiet_mode)
 				{
-					cv::imshow("sim_warp", sim_warped_img);			
+					cv::imshow("sim_warp", sim_warped_img);
 				}
 				if(hog_output_file.is_open())
 				{
-					FaceAnalysis::Extract_FHOG_descriptor(hog_descriptor, sim_warped_img, num_hog_rows, num_hog_cols);						
+					FaceAnalysis::Extract_FHOG_descriptor(hog_descriptor, sim_warped_img, num_hog_rows, num_hog_cols);
 
 					if(visualise_hog && !det_parameters.quiet_mode)
 					{
 						cv::Mat_<double> hog_descriptor_vis;
 						FaceAnalysis::Visualise_FHOG(hog_descriptor, num_hog_rows, num_hog_cols, hog_descriptor_vis);
-						cv::imshow("hog", hog_descriptor_vis);	
+						cv::imshow("hog", hog_descriptor_vis);
 					}
 				}
 			}
@@ -522,15 +525,15 @@ int main (int argc, char **argv)
 				}
 
 				char name[100];
-					
+
 				// output the frame number
 				std::sprintf(name, "frame_det_%06d.png", frame_count);
 
 				// Construct the output filename
 				boost::filesystem::path slash("/");
-					
+
 				std::string preferredSlash = slash.make_preferred().string();
-				
+
 				string out_file = output_similarity_align[f_n] + preferredSlash + string(name);
 				imwrite(out_file, sim_warped_img);
 			}
@@ -541,16 +544,16 @@ int main (int argc, char **argv)
 			// Output the landmarks, pose, gaze, parameters and AUs
 			outputAllFeatures(&output_file, output_2D_landmarks, output_3D_landmarks, output_model_params, output_pose, output_AUs, output_gaze,
 				face_model, frame_count, time_stamp, detection_success, gazeDirection0, gazeDirection1,
-				pose_estimate, fx, fy, cx, cy, face_analyser);
+				pose_estimate, fx, fy, cx, cy, face_analyser, tr, br);
 
 			// output the tracked video
 			if(!tracked_videos_output.empty())
-			{		
+			{
 				writerFace << captured_image;
 			}
 
 			video_capture >> captured_image;
-			
+
 			// detect key presses
 			char character_press = cv::waitKey(1);
 			// restart the tracker
@@ -577,7 +580,7 @@ int main (int argc, char **argv)
 			}
 
 		}
-		
+
 		output_file.close();
 
 		// Reset the models for the next video
@@ -611,7 +614,7 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 	bool output_model_params, bool output_pose, bool output_AUs, bool output_gaze,
 	const LandmarkDetector::CLNF& face_model, int frame_count, double time_stamp, bool detection_success,
 	cv::Point3f gazeDirection0, cv::Point3f gazeDirection1, const cv::Vec6d& pose_estimate, double fx, double fy, double cx, double cy,
-	const FaceAnalysis::FaceAnalyser& face_analyser)
+	const FaceAnalysis::FaceAnalyser& face_analyser, tf::Transform tr, tf::TransformBroadcaster br)
 {
 	// prepare message to send in topic
 	std_msgs::Float32MultiArray array;
@@ -626,12 +629,12 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 	// Output the estimated gaze
 	if (output_gaze)
 	{
-		array.data.push_back(gazeDirection0.x);
+		/*array.data.push_back(gazeDirection0.x);
 		array.data.push_back(gazeDirection0.y);
 		array.data.push_back(gazeDirection0.z);
 		array.data.push_back(gazeDirection1.x);
 		array.data.push_back(gazeDirection1.y);
-		array.data.push_back(gazeDirection1.z);
+		array.data.push_back(gazeDirection1.z);*/
 
 		*output_file << ", " << gazeDirection0.x << ", " << gazeDirection0.y << ", " << gazeDirection0.z
 			<< ", " << gazeDirection1.x << ", " << gazeDirection1.y << ", " << gazeDirection1.z;
@@ -640,27 +643,34 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 	// Output the estimated head pose
 	if (output_pose)
 	{
-		array.data.push_back(pose_estimate[0]);
+		/*array.data.push_back(pose_estimate[0]);
 		array.data.push_back(pose_estimate[1]);
 		array.data.push_back(pose_estimate[2]);
 		array.data.push_back(pose_estimate[3]);
 		array.data.push_back(pose_estimate[4]);
-		array.data.push_back(pose_estimate[5]);
+		array.data.push_back(pose_estimate[5]);*/
 
 		*output_file << ", " << pose_estimate[0] << ", " << pose_estimate[1] << ", " << pose_estimate[2]
 			<< ", " << pose_estimate[3] << ", " << pose_estimate[4] << ", " << pose_estimate[5];
 	}
 
 	// Output the detected 2D facial landmarks
-	if (output_2D_landmarks)
+	/*if (output_2D_landmarks)
 	{
 		for (int i = 0; i < face_model.pdm.NumberOfPoints() * 2; ++i)
 		{
 			*output_file << ", " << face_model.detected_landmarks.at<double>(i);
 		}
-	}
+	}*/
 
-	// Output the detected 3D facial landmarks
+  double x = 0;
+  double y = 0;
+  double z = 0;
+  double a = 1;
+  double b = 0;
+  double c = 0;
+
+  // Output the detected 3D facial landmarks
 	if (output_3D_landmarks)
 	{
 		cv::Mat_<double> shape_3D = face_model.GetShape(fx, fy, cx, cy);
@@ -668,6 +678,22 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 		{
 			*output_file << ", " << shape_3D.at<double>(i);
 		}
+
+    // sellion position
+    x = shape_3D.at<double>(28)/1000.; // SELLION X
+    y = shape_3D.at<double>(96)/1000.; // SELLION Y
+    z = shape_3D.at<double>(164)/1000.; //SELLION Z
+    array.data.push_back(x);
+    array.data.push_back(y);
+    array.data.push_back(z);
+
+    // gaze direction from SELLION
+    a = 0.5*(gazeDirection0.x + gazeDirection1.x);
+    b = 0.5*(gazeDirection0.y + gazeDirection1.y);
+    c = 0.5*(gazeDirection0.z + gazeDirection1.z);
+    array.data.push_back(a);
+    array.data.push_back(b);
+    array.data.push_back(c);
 	}
 
 	if (output_model_params)
@@ -745,7 +771,12 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 		}
 	}
 
-	pub_feature.publish(array);
+    pub_feature.publish(array);
+
+    //add a tf frame for the gaze direction
+    tr.setOrigin( tf::Vector3(x, y, z) );
+    tr.setRotation( tf::Quaternion(a, b, c, 0) );
+    br.sendTransform(tf::StampedTransform(tr, ros::Time::now(), "base_footprint", "face_0"));
 
 	*output_file << endl;
 }

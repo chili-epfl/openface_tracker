@@ -1,4 +1,4 @@
-# Install script for directory: /home/asselbor/catkin_ws/src/features_face/OpenFace/lib/local/LandmarkDetector
+# Install script for directory: /home/alexis/catkin/src/features_face/OpenFace/lib/local/LandmarkDetector
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -33,10 +33,10 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE STATIC_LIBRARY FILES "/home/asselbor/catkin_ws/src/features_face/OpenFace/build/lib/local/LandmarkDetector/libLandmarkDetector.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "/home/alexis/catkin/src/features_face/OpenFace/build/lib/local/LandmarkDetector/libLandmarkDetector.so")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES "/home/asselbor/catkin_ws/src/features_face/OpenFace/lib/local/LandmarkDetector/HEADERS")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES "/home/alexis/catkin/src/features_face/OpenFace/lib/local/LandmarkDetector/HEADERS")
 endif()
 

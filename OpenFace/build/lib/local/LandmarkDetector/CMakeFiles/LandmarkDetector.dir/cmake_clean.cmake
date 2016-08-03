@@ -11,7 +11,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/LandmarkDetector.dir/src/SVR_patch_expert.cpp.o"
   "CMakeFiles/LandmarkDetector.dir/src/stdafx.cpp.o"
   "libLandmarkDetector.pdb"
-  "libLandmarkDetector.a"
+  "libLandmarkDetector.so"
 )
 
 # Per-language clean rules from dependency scanning.

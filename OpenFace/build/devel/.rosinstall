@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/asselbor/catkin_ws/src/features_face/OpenFace/build/devel/setup.sh
+    local-name: /home/alexis/catkin/src/features_face/OpenFace/build/devel/setup.sh

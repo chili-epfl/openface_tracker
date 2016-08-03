@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/asselbor/catkin_ws/src/features_face/OpenFace
+CMAKE_SOURCE_DIR = /home/alexis/catkin/src/features_face/OpenFace
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/asselbor/catkin_ws/src/features_face/OpenFace/build
+CMAKE_BINARY_DIR = /home/alexis/catkin/src/features_face/OpenFace/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -78,17 +78,6 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -100,21 +89,21 @@ install/local/fast: install/local
 
 .PHONY : install/local/fast
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
 
-# Special rule for the target install/strip
-install/strip/fast: install/strip
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
 
-.PHONY : install/strip/fast
+.PHONY : rebuild_cache/fast
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -124,14 +113,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/asselbor/catkin_ws/src/features_face/OpenFace/build/CMakeFiles /home/asselbor/catkin_ws/src/features_face/OpenFace/build/lib/local/LandmarkDetector/CMakeFiles/progress.marks
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f CMakeFiles/Makefile2 lib/local/LandmarkDetector/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/asselbor/catkin_ws/src/features_face/OpenFace/build/CMakeFiles 0
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/alexis/catkin/src/features_face/OpenFace/build/CMakeFiles /home/alexis/catkin/src/features_face/OpenFace/build/lib/local/LandmarkDetector/CMakeFiles/progress.marks
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f CMakeFiles/Makefile2 lib/local/LandmarkDetector/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alexis/catkin/src/features_face/OpenFace/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f CMakeFiles/Makefile2 lib/local/LandmarkDetector/clean
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f CMakeFiles/Makefile2 lib/local/LandmarkDetector/clean
 .PHONY : clean
 
 # The main clean target
@@ -141,22 +130,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f CMakeFiles/Makefile2 lib/local/LandmarkDetector/preinstall
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f CMakeFiles/Makefile2 lib/local/LandmarkDetector/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f CMakeFiles/Makefile2 lib/local/LandmarkDetector/preinstall
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f CMakeFiles/Makefile2 lib/local/LandmarkDetector/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/rule:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f CMakeFiles/Makefile2 lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/rule
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f CMakeFiles/Makefile2 lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/rule
 .PHONY : lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/rule
 
 # Convenience name for target.
@@ -166,7 +155,7 @@ LandmarkDetector: lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/rul
 
 # fast build rule for target.
 LandmarkDetector/fast:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build
 .PHONY : LandmarkDetector/fast
 
 src/CCNF_patch_expert.o: src/CCNF_patch_expert.cpp.o
@@ -175,7 +164,7 @@ src/CCNF_patch_expert.o: src/CCNF_patch_expert.cpp.o
 
 # target to build an object file
 src/CCNF_patch_expert.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/CCNF_patch_expert.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/CCNF_patch_expert.cpp.o
 .PHONY : src/CCNF_patch_expert.cpp.o
 
 src/CCNF_patch_expert.i: src/CCNF_patch_expert.cpp.i
@@ -184,7 +173,7 @@ src/CCNF_patch_expert.i: src/CCNF_patch_expert.cpp.i
 
 # target to preprocess a source file
 src/CCNF_patch_expert.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/CCNF_patch_expert.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/CCNF_patch_expert.cpp.i
 .PHONY : src/CCNF_patch_expert.cpp.i
 
 src/CCNF_patch_expert.s: src/CCNF_patch_expert.cpp.s
@@ -193,7 +182,7 @@ src/CCNF_patch_expert.s: src/CCNF_patch_expert.cpp.s
 
 # target to generate assembly for a file
 src/CCNF_patch_expert.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/CCNF_patch_expert.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/CCNF_patch_expert.cpp.s
 .PHONY : src/CCNF_patch_expert.cpp.s
 
 src/LandmarkDetectionValidator.o: src/LandmarkDetectionValidator.cpp.o
@@ -202,7 +191,7 @@ src/LandmarkDetectionValidator.o: src/LandmarkDetectionValidator.cpp.o
 
 # target to build an object file
 src/LandmarkDetectionValidator.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectionValidator.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectionValidator.cpp.o
 .PHONY : src/LandmarkDetectionValidator.cpp.o
 
 src/LandmarkDetectionValidator.i: src/LandmarkDetectionValidator.cpp.i
@@ -211,7 +200,7 @@ src/LandmarkDetectionValidator.i: src/LandmarkDetectionValidator.cpp.i
 
 # target to preprocess a source file
 src/LandmarkDetectionValidator.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectionValidator.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectionValidator.cpp.i
 .PHONY : src/LandmarkDetectionValidator.cpp.i
 
 src/LandmarkDetectionValidator.s: src/LandmarkDetectionValidator.cpp.s
@@ -220,7 +209,7 @@ src/LandmarkDetectionValidator.s: src/LandmarkDetectionValidator.cpp.s
 
 # target to generate assembly for a file
 src/LandmarkDetectionValidator.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectionValidator.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectionValidator.cpp.s
 .PHONY : src/LandmarkDetectionValidator.cpp.s
 
 src/LandmarkDetectorFunc.o: src/LandmarkDetectorFunc.cpp.o
@@ -229,7 +218,7 @@ src/LandmarkDetectorFunc.o: src/LandmarkDetectorFunc.cpp.o
 
 # target to build an object file
 src/LandmarkDetectorFunc.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorFunc.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorFunc.cpp.o
 .PHONY : src/LandmarkDetectorFunc.cpp.o
 
 src/LandmarkDetectorFunc.i: src/LandmarkDetectorFunc.cpp.i
@@ -238,7 +227,7 @@ src/LandmarkDetectorFunc.i: src/LandmarkDetectorFunc.cpp.i
 
 # target to preprocess a source file
 src/LandmarkDetectorFunc.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorFunc.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorFunc.cpp.i
 .PHONY : src/LandmarkDetectorFunc.cpp.i
 
 src/LandmarkDetectorFunc.s: src/LandmarkDetectorFunc.cpp.s
@@ -247,7 +236,7 @@ src/LandmarkDetectorFunc.s: src/LandmarkDetectorFunc.cpp.s
 
 # target to generate assembly for a file
 src/LandmarkDetectorFunc.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorFunc.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorFunc.cpp.s
 .PHONY : src/LandmarkDetectorFunc.cpp.s
 
 src/LandmarkDetectorModel.o: src/LandmarkDetectorModel.cpp.o
@@ -256,7 +245,7 @@ src/LandmarkDetectorModel.o: src/LandmarkDetectorModel.cpp.o
 
 # target to build an object file
 src/LandmarkDetectorModel.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorModel.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorModel.cpp.o
 .PHONY : src/LandmarkDetectorModel.cpp.o
 
 src/LandmarkDetectorModel.i: src/LandmarkDetectorModel.cpp.i
@@ -265,7 +254,7 @@ src/LandmarkDetectorModel.i: src/LandmarkDetectorModel.cpp.i
 
 # target to preprocess a source file
 src/LandmarkDetectorModel.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorModel.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorModel.cpp.i
 .PHONY : src/LandmarkDetectorModel.cpp.i
 
 src/LandmarkDetectorModel.s: src/LandmarkDetectorModel.cpp.s
@@ -274,7 +263,7 @@ src/LandmarkDetectorModel.s: src/LandmarkDetectorModel.cpp.s
 
 # target to generate assembly for a file
 src/LandmarkDetectorModel.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorModel.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorModel.cpp.s
 .PHONY : src/LandmarkDetectorModel.cpp.s
 
 src/LandmarkDetectorParameters.o: src/LandmarkDetectorParameters.cpp.o
@@ -283,7 +272,7 @@ src/LandmarkDetectorParameters.o: src/LandmarkDetectorParameters.cpp.o
 
 # target to build an object file
 src/LandmarkDetectorParameters.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorParameters.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorParameters.cpp.o
 .PHONY : src/LandmarkDetectorParameters.cpp.o
 
 src/LandmarkDetectorParameters.i: src/LandmarkDetectorParameters.cpp.i
@@ -292,7 +281,7 @@ src/LandmarkDetectorParameters.i: src/LandmarkDetectorParameters.cpp.i
 
 # target to preprocess a source file
 src/LandmarkDetectorParameters.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorParameters.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorParameters.cpp.i
 .PHONY : src/LandmarkDetectorParameters.cpp.i
 
 src/LandmarkDetectorParameters.s: src/LandmarkDetectorParameters.cpp.s
@@ -301,7 +290,7 @@ src/LandmarkDetectorParameters.s: src/LandmarkDetectorParameters.cpp.s
 
 # target to generate assembly for a file
 src/LandmarkDetectorParameters.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorParameters.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorParameters.cpp.s
 .PHONY : src/LandmarkDetectorParameters.cpp.s
 
 src/LandmarkDetectorUtils.o: src/LandmarkDetectorUtils.cpp.o
@@ -310,7 +299,7 @@ src/LandmarkDetectorUtils.o: src/LandmarkDetectorUtils.cpp.o
 
 # target to build an object file
 src/LandmarkDetectorUtils.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorUtils.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorUtils.cpp.o
 .PHONY : src/LandmarkDetectorUtils.cpp.o
 
 src/LandmarkDetectorUtils.i: src/LandmarkDetectorUtils.cpp.i
@@ -319,7 +308,7 @@ src/LandmarkDetectorUtils.i: src/LandmarkDetectorUtils.cpp.i
 
 # target to preprocess a source file
 src/LandmarkDetectorUtils.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorUtils.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorUtils.cpp.i
 .PHONY : src/LandmarkDetectorUtils.cpp.i
 
 src/LandmarkDetectorUtils.s: src/LandmarkDetectorUtils.cpp.s
@@ -328,7 +317,7 @@ src/LandmarkDetectorUtils.s: src/LandmarkDetectorUtils.cpp.s
 
 # target to generate assembly for a file
 src/LandmarkDetectorUtils.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorUtils.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/LandmarkDetectorUtils.cpp.s
 .PHONY : src/LandmarkDetectorUtils.cpp.s
 
 src/PAW.o: src/PAW.cpp.o
@@ -337,7 +326,7 @@ src/PAW.o: src/PAW.cpp.o
 
 # target to build an object file
 src/PAW.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PAW.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PAW.cpp.o
 .PHONY : src/PAW.cpp.o
 
 src/PAW.i: src/PAW.cpp.i
@@ -346,7 +335,7 @@ src/PAW.i: src/PAW.cpp.i
 
 # target to preprocess a source file
 src/PAW.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PAW.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PAW.cpp.i
 .PHONY : src/PAW.cpp.i
 
 src/PAW.s: src/PAW.cpp.s
@@ -355,7 +344,7 @@ src/PAW.s: src/PAW.cpp.s
 
 # target to generate assembly for a file
 src/PAW.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PAW.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PAW.cpp.s
 .PHONY : src/PAW.cpp.s
 
 src/PDM.o: src/PDM.cpp.o
@@ -364,7 +353,7 @@ src/PDM.o: src/PDM.cpp.o
 
 # target to build an object file
 src/PDM.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PDM.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PDM.cpp.o
 .PHONY : src/PDM.cpp.o
 
 src/PDM.i: src/PDM.cpp.i
@@ -373,7 +362,7 @@ src/PDM.i: src/PDM.cpp.i
 
 # target to preprocess a source file
 src/PDM.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PDM.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PDM.cpp.i
 .PHONY : src/PDM.cpp.i
 
 src/PDM.s: src/PDM.cpp.s
@@ -382,7 +371,7 @@ src/PDM.s: src/PDM.cpp.s
 
 # target to generate assembly for a file
 src/PDM.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PDM.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/PDM.cpp.s
 .PHONY : src/PDM.cpp.s
 
 src/Patch_experts.o: src/Patch_experts.cpp.o
@@ -391,7 +380,7 @@ src/Patch_experts.o: src/Patch_experts.cpp.o
 
 # target to build an object file
 src/Patch_experts.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/Patch_experts.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/Patch_experts.cpp.o
 .PHONY : src/Patch_experts.cpp.o
 
 src/Patch_experts.i: src/Patch_experts.cpp.i
@@ -400,7 +389,7 @@ src/Patch_experts.i: src/Patch_experts.cpp.i
 
 # target to preprocess a source file
 src/Patch_experts.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/Patch_experts.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/Patch_experts.cpp.i
 .PHONY : src/Patch_experts.cpp.i
 
 src/Patch_experts.s: src/Patch_experts.cpp.s
@@ -409,7 +398,7 @@ src/Patch_experts.s: src/Patch_experts.cpp.s
 
 # target to generate assembly for a file
 src/Patch_experts.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/Patch_experts.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/Patch_experts.cpp.s
 .PHONY : src/Patch_experts.cpp.s
 
 src/SVR_patch_expert.o: src/SVR_patch_expert.cpp.o
@@ -418,7 +407,7 @@ src/SVR_patch_expert.o: src/SVR_patch_expert.cpp.o
 
 # target to build an object file
 src/SVR_patch_expert.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/SVR_patch_expert.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/SVR_patch_expert.cpp.o
 .PHONY : src/SVR_patch_expert.cpp.o
 
 src/SVR_patch_expert.i: src/SVR_patch_expert.cpp.i
@@ -427,7 +416,7 @@ src/SVR_patch_expert.i: src/SVR_patch_expert.cpp.i
 
 # target to preprocess a source file
 src/SVR_patch_expert.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/SVR_patch_expert.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/SVR_patch_expert.cpp.i
 .PHONY : src/SVR_patch_expert.cpp.i
 
 src/SVR_patch_expert.s: src/SVR_patch_expert.cpp.s
@@ -436,7 +425,7 @@ src/SVR_patch_expert.s: src/SVR_patch_expert.cpp.s
 
 # target to generate assembly for a file
 src/SVR_patch_expert.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/SVR_patch_expert.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/SVR_patch_expert.cpp.s
 .PHONY : src/SVR_patch_expert.cpp.s
 
 src/stdafx.o: src/stdafx.cpp.o
@@ -445,7 +434,7 @@ src/stdafx.o: src/stdafx.cpp.o
 
 # target to build an object file
 src/stdafx.cpp.o:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/stdafx.cpp.o
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/stdafx.cpp.o
 .PHONY : src/stdafx.cpp.o
 
 src/stdafx.i: src/stdafx.cpp.i
@@ -454,7 +443,7 @@ src/stdafx.i: src/stdafx.cpp.i
 
 # target to preprocess a source file
 src/stdafx.cpp.i:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/stdafx.cpp.i
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/stdafx.cpp.i
 .PHONY : src/stdafx.cpp.i
 
 src/stdafx.s: src/stdafx.cpp.s
@@ -463,7 +452,7 @@ src/stdafx.s: src/stdafx.cpp.s
 
 # target to generate assembly for a file
 src/stdafx.cpp.s:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/stdafx.cpp.s
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(MAKE) -f lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/build.make lib/local/LandmarkDetector/CMakeFiles/LandmarkDetector.dir/src/stdafx.cpp.s
 .PHONY : src/stdafx.cpp.s
 
 # Help Target
@@ -474,10 +463,9 @@ help:
 	@echo "... depend"
 	@echo "... install"
 	@echo "... list_install_components"
-	@echo "... rebuild_cache"
 	@echo "... LandmarkDetector"
 	@echo "... install/local"
-	@echo "... install/strip"
+	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... src/CCNF_patch_expert.o"
 	@echo "... src/CCNF_patch_expert.i"
@@ -523,6 +511,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/asselbor/catkin_ws/src/features_face/OpenFace/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/alexis/catkin/src/features_face/OpenFace/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

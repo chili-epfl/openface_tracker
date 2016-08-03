@@ -1,4 +1,4 @@
-# Install script for directory: /home/asselbor/catkin_ws/src/features_face/OpenFace/lib/3rdParty/dlib
+# Install script for directory: /home/alexis/catkin/src/features_face/OpenFace/lib/3rdParty/dlib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

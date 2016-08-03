@@ -1,9 +1,13 @@
 <launch>
 
-  <arg name="pathOpenFace" value="/home/asselbor/catkin_ws/src/features_face/OpenFace" /> 
+  <arg name="pathOpenFace" value="/home/alexis/catkin/src/features_face/OpenFace" />
 
 
   <node pkg="features_face" type="executable_launcher.py" name="executable_launcher">
   </node>
+  <node pkg="features_face" type="gaze_direction.py" name="gaze_direction">
+  </node>
+
+  <node name="base_footprint_transform" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /map /base_footprint 100"/>
 
 </launch>

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/usr/src/gtest/src/gtest-all.cc" "/home/asselbor/catkin_ws/src/features_face/OpenFace/build/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
+  "/usr/src/gtest/src/gtest-all.cc" "/home/alexis/catkin/src/features_face/OpenFace/build/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -18,7 +18,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/opt/ros/kinetic/include/opencv-3.1.0-dev/opencv"
   "/opt/ros/kinetic/include/opencv-3.1.0-dev"
   "/usr/include/boost"
-  "/home/asselbor/catkin_ws/src/features_face/OpenFace/lib/3rdParty/dlib/include"
+  "/home/alexis/catkin/src/features_face/OpenFace/lib/3rdParty/dlib/include"
   "/usr/src/gtest/include"
   "/usr/src/gtest"
   )

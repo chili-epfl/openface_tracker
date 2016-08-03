@@ -7,7 +7,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/FaceAnalyser.dir/src/SVR_static_lin_regressors.cpp.o"
   "CMakeFiles/FaceAnalyser.dir/src/GazeEstimation.cpp.o"
   "libFaceAnalyser.pdb"
-  "libFaceAnalyser.a"
+  "libFaceAnalyser.so"
 )
 
 # Per-language clean rules from dependency scanning.
