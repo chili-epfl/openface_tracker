@@ -51,6 +51,8 @@ printErrorAndAbort( std::string( "Fatal error: " ) + stream )
 
 #define _USE_MATH_DEFINES
 
+
+
 using namespace std;
 
 using namespace boost::filesystem;
@@ -220,10 +222,11 @@ int main (int argc, char **argv)
 
 	// Grab camera parameters, if they are not defined (approximate values will be used)
 	float fx = 0, fy = 0, cx = 0, cy = 0;
-	// By default try webcam 0
-	int device = 0;
+	// By default try webcam 1 for experimental setup :
+    // HACK : it should be passed as an argument and throw error
+	int device = 1;
 	// Get camera parameters
-	LandmarkDetector::get_camera_params(device, fx, fy, cx, cy, arguments);
+    LandmarkDetector::get_camera_params(device, fx, fy, cx, cy, arguments);
 
 	// If cx (optical axis centre) is undefined will use the image size/2 as an estimate
 	bool cx_undefined = false;
@@ -698,9 +701,9 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
     array.data.push_back(b);
     array.data.push_back(c);*/
 
-    x = pose_estimate[0]/1000.; // HEAD X
-    y = pose_estimate[1]/1000.; // HEAD Y
-    z = pose_estimate[2]/1000.; // HEAD Z
+    x = pose_estimate[0]*1.2/1000.; // HEAD X
+    y = pose_estimate[1]*1.2/1000.; // HEAD Y
+    z = pose_estimate[2]*1.2/1000.; // HEAD Z
     array.data.push_back(x);
     array.data.push_back(y);
     array.data.push_back(z);
@@ -792,7 +795,7 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 
     //add a tf frame for the gaze direction
     tr.setOrigin( tf::Vector3(-x, -y, z) );
-    tr.setRotation( tf::createQuaternionFromRPY(a, -(b+M_PI), c) );
+    tr.setRotation( tf::createQuaternionFromRPY((a-M_PI/20.)*1.2, -(b+M_PI), c) );
     br.sendTransform(tf::StampedTransform(tr, ros::Time::now(), "camera", "face_0"));
 
 	*output_file << endl;
