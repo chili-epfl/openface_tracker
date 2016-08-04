@@ -26,7 +26,7 @@
 #include "std_msgs/String.h"
 #include "std_msgs/Float32MultiArray.h"
 #include "tf/transform_broadcaster.h"
-
+#include <math.h>
 
 // topic in global variable
 ros::Publisher pub_feature;
@@ -48,6 +48,8 @@ static void printErrorAndAbort( const std::string & error )
 
 #define FATAL_STREAM( stream ) \
 printErrorAndAbort( std::string( "Fatal error: " ) + stream )
+
+#define _USE_MATH_DEFINES
 
 using namespace std;
 
@@ -205,7 +207,7 @@ int main (int argc, char **argv)
 	// Get the input output file parameters
 
 	// Indicates that rotation should be with respect to camera or world coordinates
-	bool use_world_coordinates;
+	bool use_world_coordinates = false;
 	LandmarkDetector::get_video_input_output_params(input_files, depth_directories, output_files, tracked_videos_output, use_world_coordinates, arguments);
 
 
@@ -666,7 +668,7 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
   double x = 0;
   double y = 0;
   double z = 0;
-  double a = 1;
+  double a = 0;
   double b = 0;
   double c = 0;
 
@@ -679,6 +681,7 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 			*output_file << ", " << shape_3D.at<double>(i);
 		}
 
+    /* GAZE
     // sellion position
     x = shape_3D.at<double>(28)/1000.; // SELLION X
     y = shape_3D.at<double>(96)/1000.; // SELLION Y
@@ -691,6 +694,20 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
     a = 0.5*(gazeDirection0.x + gazeDirection1.x);
     b = 0.5*(gazeDirection0.y + gazeDirection1.y);
     c = 0.5*(gazeDirection0.z + gazeDirection1.z);
+    array.data.push_back(a);
+    array.data.push_back(b);
+    array.data.push_back(c);*/
+
+    x = pose_estimate[0]/1000.; // HEAD X
+    y = pose_estimate[1]/1000.; // HEAD Y
+    z = pose_estimate[2]/1000.; // HEAD Z
+    array.data.push_back(x);
+    array.data.push_back(y);
+    array.data.push_back(z);
+
+    a = pose_estimate[3]; // HEAD RX
+    b = pose_estimate[4]; // HEAD RY
+    c = pose_estimate[5]; // HEAD RZ
     array.data.push_back(a);
     array.data.push_back(b);
     array.data.push_back(c);
@@ -774,9 +791,9 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
     pub_feature.publish(array);
 
     //add a tf frame for the gaze direction
-    tr.setOrigin( tf::Vector3(x, y, z) );
-    tr.setRotation( tf::Quaternion(a, b, c, 0) );
-    br.sendTransform(tf::StampedTransform(tr, ros::Time::now(), "base_footprint", "face_0"));
+    tr.setOrigin( tf::Vector3(-x, -y, z) );
+    tr.setRotation( tf::createQuaternionFromRPY(a, -(b+M_PI), c) );
+    br.sendTransform(tf::StampedTransform(tr, ros::Time::now(), "camera", "face_0"));
 
 	*output_file << endl;
 }

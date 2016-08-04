@@ -5983,6 +5983,8 @@ std_msgs/Float32MultiArray.h
 /home/alexis/catkin/src/features_face/OpenFace/exe/FeatureExtraction/std_msgs/Float32MultiArray.h
 tf/transform_broadcaster.h
 /home/alexis/catkin/src/features_face/OpenFace/exe/FeatureExtraction/tf/transform_broadcaster.h
+math.h
+-
 
 /opt/ros/kinetic/include/XmlRpcDecl.h
 ros/macros.h

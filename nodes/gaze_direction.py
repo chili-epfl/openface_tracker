@@ -22,7 +22,7 @@ def onReceiveDirection(msg):
     b = msg.data[4]
     c = msg.data[5]
     w = 0
-    rospy.loginfo(str(x)+" , "+str(y)+" , "+str(z)+" , "+str(a)+" , "+str(b)+" , "+str(c))
+    #rospy.loginfo(str(x)+" , "+str(y)+" , "+str(z)+" , "+str(a)+" , "+str(b)+" , "+str(c))
     #br.sendTransform((x,y,z),(a,b,c,w),rospy.Time.now(),"face_0","base_footprint")
 
 
