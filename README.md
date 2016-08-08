@@ -3,6 +3,7 @@
 
 New version of attention_tracker (https://github.com/chili-epfl/attention-tracker) using OpenFace Project https://github.com/TadasBaltrusaitis/OpenFace
 
+![screenshot using rviz for frames visualisation](share/screen.png)
 
 ### installation:
 
