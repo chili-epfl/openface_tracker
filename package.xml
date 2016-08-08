@@ -1,18 +1,19 @@
 <?xml version="1.0"?>
 <package>
-  <name>features_face</name>
-  <version>0.0.0</version>
-  <description>Package allowing features extraction from human face. Using OpenFace Project https://github.com/TadasBaltrusaitis/OpenFace</description>
-  <maintainer email="thibault.asselborn@gmail.com">tasselborn</maintainer>
+  <name>openface_tracker</name>
+  <version>0.1.0</version>
+  <description>New version of attention_tracker (https://github.com/chili-epfl/attention-tracker) using OpenFace Project https://github.com/TadasBaltrusaitis/OpenFace</description>
 
+  <maintainer email="thibault.asselborn@gmail.com">Thibault Asselborn</maintainer>
+  <maintainer email="alexis.jacq@epfl.ch">Alexis Jacq</maintainer>
+  <author>Séverin Lemaignan</author>
+  <author>Thibault Asselborn</author>
+  <author>Alexis Jacq</author>
 
-  <!-- One license tag required, multiple allowed, one license per tag -->
-  <!-- Commonly used license strings: -->
-  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
-  <license>TODO</license>
-
+  <license>BDS</license>
 
   <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>cmake_modules</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
   <run_depend>rospy</run_depend>
@@ -25,5 +26,5 @@
   <build_depend>image_geometry</build_depend>
 
   <run_depend>tf</run_depend>
- 
+
 </package>

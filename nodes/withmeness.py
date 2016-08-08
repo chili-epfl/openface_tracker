@@ -9,22 +9,6 @@ from std_msgs.msg import String, Empty, Float64
 
 pub_withmeness = rospy.Publisher('withmeness_topic', Float64, queue_size=1)
 
-"""
-task_targets = {
-"WAITING_FOR_WORD": {"_/selection_tablet","_/experimentator"},
-"RESPONDING_TO_NEW_WORD": {"_/robot_head","_/tablet","_/experimentator"},
-"WAITING_FOR_LETTER_TO_FINISH": {"_/robot_head","_/tablet","_/experimentator"},
-"ASKING_FOR_FEEDBACK": {"_/robot_head"},
-"PUBLISHING_WORD": {"_/robot_head","_/selection_tablet","_/experimentator"},
-"WAITING_FOR_FEEDBACK": {"_/tablet","_/experimentator","_/selection_tablet"},
-"WAITING_FOR_ROBOT_TO_CONNECT": {"_/tablet","_/experimentator","_/robot_head"},
-"WAITING_FOR_TABLET_TO_CONNECT": {"_/tablet","_/experimentator","_/robot_head"},
-"RESPONDING_TO_DEMONSTRATION_FULL_WORD": {"_/robot_head","_/tablet","_/experimentator"},
-"RESPONDING_TO_DEMONSTRATION": {"_/robot_head","_/tablet","_/experimentator"},
- }"""
-
-
-
 current_task = "WAITING_FOR_WORD"
 current_target = "_"
 value = 0.5

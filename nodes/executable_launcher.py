@@ -13,7 +13,7 @@ if __name__ == '__main__':
 	rospy.init_node('executable_launcher')
 
 	# get current open face face
-	path = rospy.get_param('~pathOpenFace', '/home/alexis/catkin/src/features_face/OpenFace')
+	path = rospy.get_param('~pathOpenFace')
 	path += '/build/bin/FeatureExtraction'
 
 	os.system(path)
