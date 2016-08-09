@@ -98,7 +98,7 @@ int main( int argc, char** argv )
 
     ros::init(argc, argv, "estimate_attention");
     ros::NodeHandle n;
-    ros::Rate r(30);
+    ros::Rate r(10);
     ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("estimate_focus", 1);
     ros::Publisher fov_pub = n.advertise<sensor_msgs::Range>("face_0_field_of_view", 1);
     ros::Publisher frames_in_fov_pub = n.advertise<std_msgs::String>("actual_focus_of_attention", 1);
