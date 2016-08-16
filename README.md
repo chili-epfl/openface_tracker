@@ -9,7 +9,7 @@ New version of attention_tracker (https://github.com/chili-epfl/attention-tracke
 
 1. follow https://github.com/TadasBaltrusaitis/OpenFace/wiki/Unix-Installation for Dependencies
 
-2. openface_tracker is a ROS pakage, I assume you already have a catkin workspace (http://wiki.ros.org/catkin/Tutorials/create_a_workspace):
+2. openface_tracker is a ROS pakage, assuming you already have a catkin workspace (http://wiki.ros.org/catkin/Tutorials/create_a_workspace):
 
 ```
 $ cd (your catkin_ws)/src && git clone https://github.com/chili-epfl/openface_tracker.git
