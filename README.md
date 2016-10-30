@@ -9,10 +9,10 @@ New version of attention_tracker (https://github.com/chili-epfl/attention-tracke
 
 1. follow https://github.com/TadasBaltrusaitis/OpenFace/wiki/Unix-Installation for Dependencies (for ubuntu 16.04 follow instructions for 14.04)
 
-2. As some ROS Kinetic libraries are not linked with GCC versions >= 5.X (http://answers.ros.org/question/234322/linker-error-on-ros-kinetic-ubuntu-1604/), we now us clang. if you don't have clang installed just run:
+2. Since some of ROS Kinetic libraries are not linked with GCC versions >= 5.X (http://answers.ros.org/question/234322/linker-error-on-ros-kinetic-ubuntu-1604/), we now us clang. if you don't have clang installed just run:
 
 ```
-sudo apt-get install clang
+$ sudo apt-get install clang
 ```
 
 
