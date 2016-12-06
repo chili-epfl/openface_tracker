@@ -743,6 +743,8 @@ void outputAllFeatures(std::ofstream* output_file, bool output_2D_landmarks, boo
 			{
 				if (au_name.compare(au_reg.first) == 0)
 				{
+					string info_msg = au_name+" = "+to_string(au_reg.second);
+					ROS_INFO("%s",info_msg.c_str());
 					array.data.push_back(au_reg.second);
 					*output_file << ", " << au_reg.second;
 					break;
