@@ -1,6 +1,7 @@
 <launch>
 
     <arg name="camera_device_arg" default="0" />
+    <arg name="show_tracking_arg" default="true" />
 
     <node pkg="openface_tracker" type="FeatureExtraction" name="features_extractor">
         <param name="lib_path" value="$(find openface_tracker)/lib/local"/>
