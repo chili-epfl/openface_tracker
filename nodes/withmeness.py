@@ -20,6 +20,7 @@ def onChangeTask(msg):
 
 def onChangeTarget(msg):
     global current_target
+    rospy.loginfo("target = "+str(msg.data))
     current_target = (str)(msg.data)
 
 if __name__=='__main__':

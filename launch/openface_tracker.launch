@@ -5,6 +5,7 @@
     <node pkg="openface_tracker" type="FeatureExtraction" name="features_extractor">
         <param name="lib_path" value="$(find openface_tracker)/lib/local"/>
         <param name="camera_device_param" type="str" value="$(arg camera_device_arg)"/>
+        <param name="show_tracking" type="str" value="$(arg show_tracking_arg)"/>
     </node>
 
     <node name="tablet_transform" pkg="tf" type="static_transform_publisher" args="0.3 0 0 0 0 0 /base_footprint /tablet 100"/>

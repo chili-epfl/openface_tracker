@@ -183,9 +183,17 @@ int main (int argc, char **argv)
 
     int camera_device;
     std::string camera_device_param;
+    bool tracking;
+    std::string show_tracking;
+
     _private_node.param<string>("camera_device_param", camera_device_param, "0");
+    _private_node.param<string>("show_tracking", show_tracking, "true");
+
     camera_device = stoi(camera_device_param);
+    tracking = (show_tracking=="true");
+
     cout<<camera_device_param<<endl;
+    cout<<show_tracking<<endl;
 
     std::string lib_path;
     _private_node.param<string>("lib_path", lib_path, " ... ");
@@ -500,7 +508,7 @@ int main (int argc, char **argv)
 
 				if(!det_parameters.quiet_mode)
 				{
-					cv::imshow("sim_warp", sim_warped_img);
+					//cv::imshow("sim_warp", sim_warped_img);
 				}
 				if(hog_output_file.is_open())
 				{
@@ -510,7 +518,7 @@ int main (int argc, char **argv)
 					{
 						cv::Mat_<double> hog_descriptor_vis;
 						FaceAnalysis::Visualise_FHOG(hog_descriptor, num_hog_rows, num_hog_cols, hog_descriptor_vis);
-						cv::imshow("hog", hog_descriptor_vis);
+						//cv::imshow("hog", hog_descriptor_vis);
 					}
 				}
 			}
@@ -551,7 +559,10 @@ int main (int argc, char **argv)
 			}
 
 			// Visualising the tracker
-			visualise_tracking(captured_image, face_model, det_parameters, gazeDirection0, gazeDirection1, frame_count, fx, fy, cx, cy);
+      if(tracking)
+      {
+			  visualise_tracking(captured_image, face_model, det_parameters, gazeDirection0, gazeDirection1, frame_count, fx, fy, cx, cy);
+      }
 
 			// Output the landmarks, pose, gaze, parameters and AUs
 			outputAllFeatures(&output_file, output_2D_landmarks, output_3D_landmarks, output_model_params, output_pose, output_AUs, output_gaze,
