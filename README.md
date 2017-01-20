@@ -20,7 +20,7 @@ $ sudo apt-get install clang
 
 >```
 >set(CMAKE_CXX_COMPILER "clang++")
->set(CMAKE_C_COMPILER "clang") 
+>set(CMAKE_C_COMPILER "clang")
 >```
 
 3. openface_tracker is a ROS pakage, assuming you already have a catkin workspace (http://wiki.ros.org/catkin/Tutorials/create_a_workspace):
@@ -35,9 +35,19 @@ $ cd .. && catkin_make
 $ catkin_make install
 ```
 
-### usage: 
+### usage:
 
-you can specify the camera device you yant to use (0 by default). If you want to use an external camera (# 1):
 ```
-$ roslaunch openface_tracker/openface_tracker.launch camera_device_arg:= 1
+$ roslaunch openface_tracker/openface_tracker.launch
+```
+
+You can specify the camera device you want to use (0 by default). If you want to use an external camera (# 1):
+```
+$ roslaunch openface_tracker/openface_tracker.launch camera_device_arg:=1
+```
+
+You can also specify if you want or not display the tracking. (you may not want to display the tracking if you run an experiment with subjects that can see the monitor)
+By default, the parameter ("show_tracking_arg") is "true". If you dont want to display:
+```
+$ roslaunch openface_tracker/openface_tracker.launch show_tracking_arg:=false
 ```
