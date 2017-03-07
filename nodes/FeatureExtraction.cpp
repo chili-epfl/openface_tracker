@@ -581,8 +581,8 @@ int main (int argc, char **argv)
 			char character_press = cv::waitKey(1);
 			// restart the tracker
 			if(character_press == 'r')
-			{https://techcrunch.com/2017/01/19/kristen-stewart-co-authored-a-paper-on-style-transfer-and-the-ai-community-lost-its-mind/?ncid=rss&utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+Techcrunch+%28TechCrunch%29&utm_content=FaceBook&sr_share=facebook
-				face_model.Reset();
+        {
+  			face_model.Reset();
 			}
 			// quit the application
 			else if(character_press=='q')
