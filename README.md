@@ -32,7 +32,7 @@ $ cd (your catkin_ws)/src && git clone https://github.com/chili-epfl/openface_tr
 $ cd .. && catkin_make
 ```
 ```
-$ catkin_make install
+$ catkin_make install -DCMAKE_BUILD_TYPE=Release
 ```
 
 ### usage:
